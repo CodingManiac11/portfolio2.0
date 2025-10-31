@@ -12,13 +12,28 @@ import {
   MessageCircle
 } from 'lucide-react';
 
+interface FormData {
+  user_name: string;
+  user_email: string;
+  message: string;
+}
+
+interface SubmitStatus {
+  type: 'success' | 'error' | null;
+  message: string;
+}
+
 const ContactSection: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+  const [formData, setFormData] = useState<FormData>({
+    user_name: '',
+    user_email: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>({
+    type: null,
+    message: ''
+  });
 
   const contactInfo = [
     {
@@ -48,57 +63,75 @@ const ContactSection: React.FC = () => {
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      href: '#',
+      href: 'https://www.linkedin.com/in/aditya-utsav-3413a1289/',
       color: '#0077B5',
       bgColor: 'cyber-blue'
     },
     {
       name: 'GitHub',
       icon: Github,
-      href: '#',
+      href: 'https://github.com/CodingManiac11/',
       color: '#333',
       bgColor: 'cyber-green'
     },
     {
       name: 'LeetCode',
       icon: Code,
-      href: '#',
+      href: 'https://leetcode.com/u/adi_utsav/',
       color: '#FFA116',
       bgColor: 'cyber-purple'
     },
     {
       name: 'GeeksForGeeks',
       icon: Code,
-      href: '#',
+      href: 'https://www.geeksforgeeks.org/user/aditya22sc5htq/',
       color: '#0F9D58',
       bgColor: 'cyber-blue'
     },
     {
       name: 'Portfolio',
       icon: ExternalLink,
-      href: '#',
+      href: 'https://adityautsav.vercel.app/',
       color: '#FF6B6B',
       bgColor: 'cyber-green'
     }
   ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+
+    try {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setSubmitStatus({
+        type: 'success',
+        message: 'Message sent successfully! I will get back to you soon.'
+      });
+
+      setFormData({
+        user_name: '',
+        user_email: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: 'Failed to send message. Please try again later.'
+      });
+    } finally {
       setIsSubmitting(false);
-      setFormData({ name: '', email: '', message: '' });
-      alert('Message sent successfully!');
-    }, 2000);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const containerVariants = {
@@ -212,14 +245,14 @@ const ContactSection: React.FC = () => {
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-gray-300 mb-2 font-semibold">
+                    <label htmlFor="user_name" className="block text-gray-300 mb-2 font-semibold">
                       Full Name
                     </label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
+                      id="user_name"
+                      name="user_name"
+                      value={formData.user_name}
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 bg-dark-card border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-cyber-blue focus:outline-none transition-colors"
@@ -228,14 +261,14 @@ const ContactSection: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-gray-300 mb-2 font-semibold">
+                    <label htmlFor="user_email" className="block text-gray-300 mb-2 font-semibold">
                       Email Address
                     </label>
                     <input
                       type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
+                      id="user_email"
+                      name="user_email"
+                      value={formData.user_email}
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 bg-dark-card border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-cyber-green focus:outline-none transition-colors"
@@ -258,6 +291,18 @@ const ContactSection: React.FC = () => {
                       placeholder="Tell me about your project or just say hello..."
                     />
                   </div>
+
+                  {submitStatus.type && (
+                    <div 
+                      className={`p-4 rounded-lg border ${
+                        submitStatus.type === 'success' 
+                          ? 'bg-green-500/10 text-green-500 border-green-500/20' 
+                          : 'bg-red-500/10 text-red-500 border-red-500/20'
+                      }`}
+                    >
+                      {submitStatus.message}
+                    </div>
+                  )}
                   
                   <motion.button
                     type="submit"
