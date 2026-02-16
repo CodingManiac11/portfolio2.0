@@ -19,6 +19,9 @@ module.exports = {
         'matrix': 'matrix 20s linear infinite',
         'typing': 'typing 3.5s steps(40, end)',
         'blink-caret': 'blink-caret .75s step-end infinite',
+        'spin-slow': 'spin 8s linear infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'gradient': 'gradient 8s ease infinite',
       },
       keyframes: {
         float: {
@@ -40,6 +43,10 @@ module.exports = {
         'blink-caret': {
           'from, to': { borderColor: 'transparent' },
           '50%': { borderColor: '#00d4ff' },
+        },
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
         },
       },
       fontFamily: {

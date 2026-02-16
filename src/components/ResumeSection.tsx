@@ -12,7 +12,7 @@ const ResumeSection: React.FC = () => {
       setIsLoading(false);
       // In a real implementation, this would trigger the actual download
       const link = document.createElement('a');
-      link.href = '/ADITYA_UTSAV_RESUME.pdf';
+      link.href = '/Aditya_Utsav_Resume.pdf';
       link.download = 'Aditya_Utsav_Resume.pdf';
       link.click();
     }, 1000);
@@ -20,7 +20,7 @@ const ResumeSection: React.FC = () => {
 
   const handlePreview = () => {
     // In a real implementation, this would open the PDF in a new tab
-    window.open('/ADITYA_UTSAV_RESUME.pdf', '_blank');
+    window.open('/Aditya_Utsav_Resume.pdf', '_blank');
   };
 
   const containerVariants = {
@@ -138,15 +138,14 @@ const ResumeSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* PDF Embed Placeholder */}
-              <div className="mb-8 bg-dark-card/50 rounded-lg p-8 border border-white/10">
-                <div className="text-center">
-                  <FileText size={64} className="text-cyber-blue mx-auto mb-4 opacity-50" />
-                  <p className="text-gray-300 mb-2">Resume Preview</p>
-                  <p className="text-gray-400 text-sm">
-                    PDF document containing complete professional profile
-                  </p>
-                </div>
+              {/* PDF Embed Preview */}
+              <div className="mb-8 bg-dark-card/50 rounded-lg overflow-hidden border border-white/10">
+                <iframe
+                  src="/Aditya_Utsav_Resume.pdf"
+                  title="Resume Preview"
+                  className="w-full h-[600px]"
+                  style={{ border: 'none' }}
+                />
               </div>
 
               {/* Action Buttons */}
@@ -182,7 +181,7 @@ const ResumeSection: React.FC = () => {
                 </motion.button>
 
                 <motion.button
-                  onClick={() => window.open('#', '_blank')}
+                  onClick={() => window.open('/Aditya_Utsav_Resume.pdf', '_blank')}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="flex-1 flex items-center justify-center gap-3 py-4 px-6 border-2 border-cyber-green rounded-lg font-semibold text-cyber-green transition-all duration-300 hover:bg-cyber-green hover:text-dark-bg"
@@ -200,7 +199,7 @@ const ResumeSection: React.FC = () => {
             className="mt-8 text-center"
           >
             <p className="text-gray-400 text-sm">
-              Last updated: September 2025 • PDF format • 2 pages
+              Last updated: February 2026 • PDF format
             </p>
           </motion.div>
         </motion.div>

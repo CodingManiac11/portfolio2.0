@@ -11,6 +11,7 @@ import {
   Code,
   MessageCircle
 } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface FormData {
   user_name: string;
@@ -23,7 +24,14 @@ interface SubmitStatus {
   message: string;
 }
 
-const ContactSection: React.FC = () => {
+interface ContactSectionProps {
+  onSubmitSuccess?: () => void;
+}
+
+const ContactSection: React.FC<ContactSectionProps> = ({ onSubmitSuccess }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   const [formData, setFormData] = useState<FormData>({
     user_name: '',
     user_email: '',
@@ -110,6 +118,11 @@ const ContactSection: React.FC = () => {
         message: 'Message sent successfully! I will get back to you soon.'
       });
 
+      // Trigger confetti celebration
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
+
       setFormData({
         user_name: '',
         user_email: '',
@@ -155,32 +168,39 @@ const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 bg-gradient-to-t from-dark-card/20 to-transparent">
-      <div className="max-w-6xl mx-auto">
+    <section id="contact" className={`py-24 px-4 relative overflow-hidden ${isDark ? 'bg-gradient-to-t from-gray-900/50 to-transparent' : 'bg-gradient-to-t from-gray-100/50 to-transparent'}`}>
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={containerVariants}
         >
           {/* Section Title */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-cyber font-bold bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent mb-4">
-              Get In Touch
+            <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>Contact</span>
+            <h2 className={`text-4xl md:text-6xl font-bold bg-clip-text text-transparent mb-4 ${isDark ? 'bg-gradient-to-r from-white via-purple-200 to-cyan-400' : 'bg-gradient-to-r from-gray-900 via-purple-700 to-cyan-700'}`}>
+              Let's Work Together
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-cyber-blue to-cyber-purple mx-auto rounded-full"></div>
-            <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
-              Ready to collaborate or have a question? I'd love to hear from you. Let's create something amazing together!
+            <p className={`max-w-2xl mx-auto text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              Have a project in mind or want to collaborate? I'd love to hear from you. Let's create something amazing together!
             </p>
+            <div className="w-32 h-1.5 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 mx-auto rounded-full mt-6"></div>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <motion.div variants={itemVariants} className="space-y-8">
               <div>
-                <h3 className="text-2xl font-cyber font-bold text-cyber-green mb-6 flex items-center gap-3">
-                  <MessageCircle size={24} />
-                  Let's Connect
+                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <MessageCircle size={24} className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'}`} />
+                  Get In Touch
                 </h3>
                 
                 <div className="space-y-4">
@@ -191,14 +211,14 @@ const ContactSection: React.FC = () => {
                         key={index}
                         href={info.href}
                         whileHover={{ scale: 1.02, x: 10 }}
-                        className={`flex items-center gap-4 p-4 glass rounded-lg border border-${info.color}/20 hover:border-${info.color}/50 transition-all duration-300 group`}
+                        className={`flex items-center gap-4 p-5 backdrop-blur-xl rounded-2xl border transition-all duration-300 group ${isDark ? 'bg-gradient-to-br from-gray-800/60 to-gray-900/60 border-white/10 hover:border-cyan-500/50' : 'bg-gradient-to-br from-white/80 to-gray-50/80 border-gray-200 hover:border-cyan-500/50 shadow-lg'}`}
                       >
-                        <div className={`p-3 rounded-lg bg-gradient-to-br from-${info.color}/20 to-${info.color}/40 group-hover:scale-110 transition-transform`}>
-                          <IconComponent size={20} className={`text-${info.color}`} />
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
+                          <IconComponent size={24} className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'}`} />
                         </div>
                         <div>
-                          <p className="text-gray-400 text-sm">{info.label}</p>
-                          <p className={`text-white font-semibold group-hover:text-${info.color} transition-colors`}>
+                          <p className={`text-sm uppercase tracking-wider ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>{info.label}</p>
+                          <p className={`font-semibold transition-colors ${isDark ? 'text-white group-hover:text-cyan-400' : 'text-gray-900 group-hover:text-cyan-600'}`}>
                             {info.value}
                           </p>
                         </div>
@@ -210,8 +230,9 @@ const ContactSection: React.FC = () => {
 
               {/* Social Links */}
               <div>
-                <h4 className="text-xl font-cyber font-bold text-cyber-purple mb-4">
-                  Follow Me Online
+                <h4 className={`text-xl font-bold mb-4 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <ExternalLink size={20} className={`${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
+                  Connect Online
                 </h4>
                 <div className="grid grid-cols-2 gap-3">
                   {socialLinks.map((social, index) => {
@@ -222,12 +243,12 @@ const ContactSection: React.FC = () => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.05, rotateY: 10 }}
+                        whileHover={{ scale: 1.05, y: -3 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`flex items-center gap-3 p-3 glass rounded-lg border border-${social.bgColor}/20 hover:border-${social.bgColor}/50 transition-all duration-300 group`}
+                        className={`flex items-center gap-3 p-4 backdrop-blur-xl rounded-xl border transition-all duration-300 group ${isDark ? 'bg-gradient-to-br from-gray-800/60 to-gray-900/60 border-white/10 hover:border-purple-500/50' : 'bg-gradient-to-br from-white/80 to-gray-50/80 border-gray-200 hover:border-purple-500/50 shadow-md'}`}
                       >
-                        <IconComponent size={20} className={`text-${social.bgColor} group-hover:scale-110 transition-transform`} />
-                        <span className="text-white text-sm font-semibold">{social.name}</span>
+                        <IconComponent size={20} className={`transition-colors ${isDark ? 'text-purple-400 group-hover:text-cyan-400' : 'text-purple-600 group-hover:text-cyan-600'}`} />
+                        <span className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{social.name}</span>
                       </motion.a>
                     );
                   })}
@@ -237,15 +258,15 @@ const ContactSection: React.FC = () => {
 
             {/* Contact Form */}
             <motion.div variants={itemVariants}>
-              <div className="glass rounded-2xl p-8 border border-white/10">
-                <h3 className="text-2xl font-cyber font-bold text-cyber-blue mb-6 flex items-center gap-3">
-                  <Send size={24} />
-                  Send Message
+              <div className={`backdrop-blur-xl rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-gray-800/60 to-gray-900/60 border-white/10' : 'bg-gradient-to-br from-white/80 to-gray-50/80 border-gray-200 shadow-xl'}`}>
+                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <Send size={24} className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'}`} />
+                  Send a Message
                 </h3>
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <label htmlFor="user_name" className="block text-gray-300 mb-2 font-semibold">
+                    <label htmlFor="user_name" className={`block mb-2 font-semibold text-sm uppercase tracking-wider ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                       Full Name
                     </label>
                     <input
@@ -255,13 +276,13 @@ const ContactSection: React.FC = () => {
                       value={formData.user_name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-dark-card border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-cyber-blue focus:outline-none transition-colors"
+                      className={`w-full px-4 py-4 border rounded-xl focus:outline-none focus:ring-2 transition-all ${isDark ? 'bg-gray-900/50 border-white/10 text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-cyan-500/20' : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20'}`}
                       placeholder="Your full name"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="user_email" className="block text-gray-300 mb-2 font-semibold">
+                    <label htmlFor="user_email" className={`block mb-2 font-semibold text-sm uppercase tracking-wider ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                       Email Address
                     </label>
                     <input
@@ -271,13 +292,13 @@ const ContactSection: React.FC = () => {
                       value={formData.user_email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-dark-card border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-cyber-green focus:outline-none transition-colors"
+                      className={`w-full px-4 py-4 border rounded-xl focus:outline-none focus:ring-2 transition-all ${isDark ? 'bg-gray-900/50 border-white/10 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-purple-500/20' : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20'}`}
                       placeholder="your.email@example.com"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-gray-300 mb-2 font-semibold">
+                    <label htmlFor="message" className={`block mb-2 font-semibold text-sm uppercase tracking-wider ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                       Message
                     </label>
                     <textarea
@@ -286,22 +307,24 @@ const ContactSection: React.FC = () => {
                       value={formData.message}
                       onChange={handleInputChange}
                       required
-                      rows={6}
-                      className="w-full px-4 py-3 bg-dark-card border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-cyber-purple focus:outline-none transition-colors resize-none"
+                      rows={5}
+                      className={`w-full px-4 py-4 border rounded-xl focus:outline-none focus:ring-2 transition-all resize-none ${isDark ? 'bg-gray-900/50 border-white/10 text-white placeholder-gray-500 focus:border-pink-500 focus:ring-pink-500/20' : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-pink-500 focus:ring-pink-500/20'}`}
                       placeholder="Tell me about your project or just say hello..."
                     />
                   </div>
 
                   {submitStatus.type && (
-                    <div 
-                      className={`p-4 rounded-lg border ${
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`p-4 rounded-xl ${
                         submitStatus.type === 'success' 
-                          ? 'bg-green-500/10 text-green-500 border-green-500/20' 
-                          : 'bg-red-500/10 text-red-500 border-red-500/20'
+                          ? 'bg-green-500/10 text-green-400 border border-green-500/20' 
+                          : 'bg-red-500/10 text-red-400 border border-red-500/20'
                       }`}
                     >
                       {submitStatus.message}
-                    </div>
+                    </motion.div>
                   )}
                   
                   <motion.button
@@ -309,11 +332,11 @@ const ContactSection: React.FC = () => {
                     disabled={isSubmitting}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full py-4 bg-gradient-to-r from-cyber-blue to-cyber-green rounded-lg font-semibold text-dark-bg transition-all duration-300 hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-3"
+                    className="w-full py-4 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 disabled:opacity-50 flex items-center justify-center gap-3"
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-dark-bg"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                         Sending...
                       </>
                     ) : (
@@ -331,14 +354,14 @@ const ContactSection: React.FC = () => {
           {/* Footer */}
           <motion.div
             variants={itemVariants}
-            className="mt-16 pt-8 border-t border-white/10 text-center"
+            className={`mt-20 pt-8 border-t text-center ${isDark ? 'border-white/10' : 'border-gray-200'}`}
           >
-            <p className="text-gray-400 mb-4">
-              © 2025 Aditya Utsav. Built with React & TailwindCSS
+            <p className={`mb-4 ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
+              © 2025 Aditya Utsav. Crafted with passion using React & TailwindCSS
             </p>
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center gap-2 text-cyber-blue hover:text-cyber-green transition-colors cursor-pointer"
+              className={`inline-flex items-center gap-2 transition-colors cursor-pointer ${isDark ? 'text-gray-400 hover:text-cyan-400' : 'text-gray-500 hover:text-cyan-600'}`}
             >
               <Code size={16} />
               <span className="text-sm">Made with ❤️ and lots of ☕</span>
