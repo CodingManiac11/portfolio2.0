@@ -18,12 +18,8 @@ import {
   Shield, 
   Lock, 
   Users, 
-  Lightbulb, 
-  Target, 
   Heart,
   Server,
-  Wifi,
-  Code,
   Monitor,
   Brain,
   Zap

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Briefcase, Users, Target, ChevronRight, Star } from 'lucide-react';
+import { Shield, Briefcase, Target, ChevronRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Position {
@@ -67,11 +67,6 @@ const ResponsibilitySection: React.FC = () => {
       transition: { duration: 0.6 },
     },
   };
-
-  const stats = [
-    { value: '50+', label: 'Students Mentored', gradient: 'from-cyan-500 to-blue-600' },
-    { value: '10+', label: 'Events Organized', gradient: 'from-purple-500 to-pink-600' },
-  ];
 
   return (
     <section id="responsibilities" className={`py-24 px-4 relative overflow-hidden ${isDark ? 'bg-gradient-to-b from-transparent via-gray-900/30 to-transparent' : 'bg-gradient-to-b from-transparent via-gray-100/50 to-transparent'}`}>

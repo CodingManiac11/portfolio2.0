@@ -11,6 +11,7 @@ const HeroSection: React.FC = () => {
   const fullText = "Aditya Utsav";
   const { theme } = useTheme();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const roles = [
     "Full Stack Developer",
     "Cybersecurity Enthusiast",

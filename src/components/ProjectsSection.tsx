@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Code2, Layers, Rocket, Zap, Globe, Users } from 'lucide-react';
+import { ExternalLink, Github, Layers, Rocket, Zap, Globe, Users } from 'lucide-react';
 import { SiReact, SiTypescript, SiHtml5, SiCss3, SiJavascript, SiNodedotjs, SiMongodb, SiTailwindcss } from 'react-icons/si';
 import { useTheme } from '../contexts/ThemeContext';
 
