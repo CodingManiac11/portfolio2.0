@@ -71,6 +71,7 @@ const EasterEggs: React.FC = () => {
     },
   ];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleKeyPress = useCallback((e: KeyboardEvent) => {
     const newSequence = keySequence + e.key;
     setKeySequence(newSequence);
@@ -113,7 +114,7 @@ const EasterEggs: React.FC = () => {
   }, [handleKeyPress]);
 
   // Click counter easter egg - click logo 7 times
-  const [clickCount, setClickCount] = useState(0);
+  const [, setClickCount] = useState(0);
   
   useEffect(() => {
     const handleLogoClick = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Github, GitBranch, Star, Users, Code2, Flame, ExternalLink, Loader2 } from 'lucide-react';
+import { Github, GitBranch, Star, Code2, Flame, ExternalLink, Loader2 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface GitHubRepo {
@@ -26,7 +26,6 @@ const GitHubStats: React.FC = () => {
   const [userData, setUserData] = useState<GitHubUser | null>(null);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [languages, setLanguages] = useState<{ name: string; percentage: number; color: string }[]>([]);
-  const [totalStars, setTotalStars] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const languageColors: { [key: string]: string } = {
@@ -62,9 +61,6 @@ const GitHubStats: React.FC = () => {
           const ownRepos = reposData.filter(repo => !repo.fork);
           setRepos(ownRepos);
 
-          const stars = ownRepos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-          setTotalStars(stars);
-
           const langStats: { [key: string]: number } = {};
           ownRepos.forEach(repo => {
             if (repo.language) {
@@ -92,6 +88,7 @@ const GitHubStats: React.FC = () => {
     };
 
     fetchGitHubData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const stats = [

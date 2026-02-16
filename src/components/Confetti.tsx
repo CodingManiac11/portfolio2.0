@@ -25,6 +25,7 @@ const Confetti: React.FC<ConfettiProps> = ({ isActive, duration = 3000 }) => {
     '#F8B500', '#FF69B4', '#00CED1', '#FFD700', '#7B68EE',
   ];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isActive) {
       setShow(true);

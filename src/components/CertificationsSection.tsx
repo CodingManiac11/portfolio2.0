@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Shield, Trophy, BookOpen, Star, Sparkles, ExternalLink } from 'lucide-react';
+import { Award, Shield, Trophy, BookOpen, Star, Sparkles } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Certification {
