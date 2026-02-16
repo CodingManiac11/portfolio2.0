@@ -19,60 +19,58 @@ const EasterEggs: React.FC = () => {
   const [matrixMode, setMatrixMode] = useState(false);
   const [partyMode, setPartyMode] = useState(false);
 
-  const easterEggs: EasterEgg[] = [
-    {
-      id: 'konami',
-      trigger: 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba',
-      message: '🎮 Konami Code Activated! You found a secret!',
-      icon: <Gamepad2 size={24} />,
-      color: 'from-purple-500 to-pink-500',
-    },
-    {
-      id: 'dev',
-      trigger: 'dev',
-      message: '👨‍💻 Developer Mode: Console unlocked!',
-      icon: <Code2 size={24} />,
-      color: 'from-green-500 to-cyan-500',
-    },
-    {
-      id: 'coffee',
-      trigger: 'coffee',
-      message: '☕ Coffee time! Aditya runs on caffeine!',
-      icon: <Coffee size={24} />,
-      color: 'from-amber-500 to-orange-500',
-    },
-    {
-      id: 'hire',
-      trigger: 'hireme',
-      message: '🚀 Great choice! Let\'s connect!',
-      icon: <Rocket size={24} />,
-      color: 'from-blue-500 to-purple-500',
-    },
-    {
-      id: 'love',
-      trigger: 'love',
-      message: '❤️ Spreading love through code!',
-      icon: <Heart size={24} />,
-      color: 'from-red-500 to-pink-500',
-    },
-    {
-      id: 'matrix',
-      trigger: 'matrix',
-      message: '🟢 Welcome to the Matrix...',
-      icon: <Code2 size={24} />,
-      color: 'from-green-400 to-green-600',
-    },
-    {
-      id: 'party',
-      trigger: 'party',
-      message: '🎉 Party Mode Activated!',
-      icon: <Star size={24} />,
-      color: 'from-yellow-400 to-pink-500',
-    },
-  ];
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleKeyPress = useCallback((e: KeyboardEvent) => {
+    const easterEggs: EasterEgg[] = [
+      {
+        id: 'konami',
+        trigger: 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba',
+        message: '🎮 Konami Code Activated! You found a secret!',
+        icon: <Gamepad2 size={24} />,
+        color: 'from-purple-500 to-pink-500',
+      },
+      {
+        id: 'dev',
+        trigger: 'dev',
+        message: '👨‍💻 Developer Mode: Console unlocked!',
+        icon: <Code2 size={24} />,
+        color: 'from-green-500 to-cyan-500',
+      },
+      {
+        id: 'coffee',
+        trigger: 'coffee',
+        message: '☕ Coffee time! Aditya runs on caffeine!',
+        icon: <Coffee size={24} />,
+        color: 'from-amber-500 to-orange-500',
+      },
+      {
+        id: 'hire',
+        trigger: 'hireme',
+        message: '🚀 Great choice! Let\'s connect!',
+        icon: <Rocket size={24} />,
+        color: 'from-blue-500 to-purple-500',
+      },
+      {
+        id: 'love',
+        trigger: 'love',
+        message: '❤️ Spreading love through code!',
+        icon: <Heart size={24} />,
+        color: 'from-red-500 to-pink-500',
+      },
+      {
+        id: 'matrix',
+        trigger: 'matrix',
+        message: '🟢 Welcome to the Matrix...',
+        icon: <Code2 size={24} />,
+        color: 'from-green-400 to-green-600',
+      },
+      {
+        id: 'party',
+        trigger: 'party',
+        message: '🎉 Party Mode Activated!',
+        icon: <Star size={24} />,
+        color: 'from-yellow-400 to-pink-500',
+      },
+    ];
     const newSequence = keySequence + e.key;
     setKeySequence(newSequence);
 
@@ -106,7 +104,7 @@ const EasterEggs: React.FC = () => {
     if (newSequence.length > 50) {
       setKeySequence(newSequence.slice(-20));
     }
-  }, [keySequence, easterEggs]);
+  }, [keySequence, setActiveEgg, setMatrixMode, setPartyMode, setKeySequence]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);

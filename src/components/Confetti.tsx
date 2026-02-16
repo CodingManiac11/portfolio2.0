@@ -19,15 +19,14 @@ const Confetti: React.FC<ConfettiProps> = ({ isActive, duration = 3000 }) => {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [show, setShow] = useState(false);
 
-  const colors = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
-    '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
-    '#F8B500', '#FF69B4', '#00CED1', '#FFD700', '#7B68EE',
-  ];
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isActive) {
+      const colors = [
+        '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+        '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+        '#F8B500', '#FF69B4', '#00CED1', '#FFD700', '#7B68EE',
+      ];
+      
       setShow(true);
       const newParticles: Particle[] = [];
       
