@@ -82,7 +82,7 @@ const AboutSection: React.FC = () => {
                   </div>
                   <div>
                     <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Aditya Utsav</h3>
-                    <p className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>Full Stack Developer & Security Enthusiast</p>
+                    <p className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>Frontend Developer & Security Enthusiast</p>
                   </div>
                 </div>
                 
@@ -104,7 +104,7 @@ const AboutSection: React.FC = () => {
                 </div>
 
                 <p className={`leading-relaxed text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                  A passionate <span className={`font-semibold ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>Full Stack Developer</span> and <span className={`font-semibold ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>Cybersecurity Enthusiast</span> currently 
+                  A passionate <span className={`font-semibold ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>Frontend Developer</span> and <span className={`font-semibold ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>Cybersecurity Enthusiast</span> currently 
                   pursuing B.Tech in Computer Science Engineering at Galgotias University. Recognized as a <span className={`font-semibold ${isDark ? 'text-yellow-400' : 'text-yellow-600'}`}>Reliance Foundation Scholar</span> with 
                   expertise in building secure, scalable web applications.
                 </p>
