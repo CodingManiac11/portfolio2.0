@@ -13,7 +13,7 @@ const HeroSection: React.FC = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const roles = [
-    "Full Stack Developer",
+    "Frontend Developer",
     "Cybersecurity Enthusiast",
     "Problem Solver",
     "Tech Innovator",
